@@ -65,67 +65,6 @@ void stampaSet(int set[RAWS][COLUMNS], int* cartelle_counter)   {
 
 }
 
-//le cartelle devono avere 5 numeri per riga, questa funzione controlla e aggiusta ogni cartella del set
-void aggiustaSet(int set[RAWS][COLUMNS])  {
-    int corretto = 1, countVec[RAWS], i, j, k;
-    
-    for(i=0; i<RAWS; i++)   {
-        int count = 0;
-        for(j=0; j<COLUMNS; j++)    {
-            if (set[i][j] != 0)
-                count++;
-        }
-        if (count != 5)
-            corretto = 0;
-        countVec[i] = count;
-    }
-
-    //questo pezzo di codice fa S C H I F O
-    while(!corretto) {
-        corretto = 1;
-        for(i=0; i<RAWS; i++)   {   //esploriamo tutte le righe fintanto che sono 
-
-            while (countVec[i] > 5)    {   //si sostituisce il primo elemento della riga con il primo spazio vuoto della colonna
-                corretto = 0;
-                for(j=0; j<COLUMNS; j++) {
-                    if (set[i][j] != 0) {
-                        for(k=i; k<RAWS; k++)   {
-                            if (set[k][j] == 0) {
-                                int temp = set[i][j];
-                                set[i][j] = set[k][j];
-                                set[k][j] = temp;
-                                countVec[k]++;
-                            }
-                        }
-                    }
-                }
-                countVec[i]--;
-            }
-
-            while (countVec[i] < 5) {   //si sostituisce il primo spazio vuoto della riga con il primo elemento della colonna
-                corretto = 0;
-                for(j=0; j<COLUMNS; j++) {
-                    if (set[i][j] == 0) {
-                        for(k=i; k<RAWS; k++)   {
-                            if (set[k][j] != 0) {
-                                int temp = set[i][j];
-                                set[i][j] = set[k][j];
-                                set[k][j] = temp;
-                                countVec[k]--;
-                            }
-                        }
-                    }
-                }
-                countVec[i]++;
-            }
-
-
-        }
-
-
-    }
-}
-
 void generaSet(int* cartelle_counter)    {
     int set[RAWS][COLUMNS], colonna[COL_LENGHT], count = 1;
 
