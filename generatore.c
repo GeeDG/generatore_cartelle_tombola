@@ -79,7 +79,6 @@ void generaSet(int* cartelle_counter)    {
         inserisciInSet(set, colonna, i);
     }
 
-    aggiustaSet(set);
     stampaSet(set, cartelle_counter);
 
 }
