@@ -2,16 +2,16 @@
 triple:          'arm64-apple-darwin'
 binary-path:     '/Users/carminedipinto/generatore_cartelle_tombola/generatore_cartelle_tombola/generatore'
 relocations:
-  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _shuffle, symObjAddr: 0x0, symBinAddr: 0x10000316C, symSize: 0xA4 }
-  - { offsetInCU: 0x41, offset: 0x41, size: 0x8, addend: 0x0, symName: _shuffle, symObjAddr: 0x0, symBinAddr: 0x10000316C, symSize: 0xA4 }
-  - { offsetInCU: 0xAB, offset: 0xAB, size: 0x8, addend: 0x0, symName: _inserisciRigaInSet, symObjAddr: 0xA4, symBinAddr: 0x100003210, symSize: 0xAC }
-  - { offsetInCU: 0x115, offset: 0x115, size: 0x8, addend: 0x0, symName: _generaRigaRandomPattern, symObjAddr: 0x150, symBinAddr: 0x1000032BC, symSize: 0x9C }
-  - { offsetInCU: 0x163, offset: 0x163, size: 0x8, addend: 0x0, symName: _generaColonna, symObjAddr: 0x1EC, symBinAddr: 0x100003358, symSize: 0x70 }
-  - { offsetInCU: 0x1BF, offset: 0x1BF, size: 0x8, addend: 0x0, symName: _inserisciColonnaInSet, symObjAddr: 0x25C, symBinAddr: 0x1000033C8, symSize: 0xB0 }
-  - { offsetInCU: 0x229, offset: 0x229, size: 0x8, addend: 0x0, symName: _inizializza, symObjAddr: 0x30C, symBinAddr: 0x100003478, symSize: 0x1F0 }
-  - { offsetInCU: 0x320, offset: 0x320, size: 0x8, addend: 0x0, symName: _stampaSet, symObjAddr: 0x4FC, symBinAddr: 0x100003668, symSize: 0x180 }
-  - { offsetInCU: 0x38A, offset: 0x38A, size: 0x8, addend: 0x0, symName: _generaPattern, symObjAddr: 0x67C, symBinAddr: 0x1000037E8, symSize: 0x2A0 }
-  - { offsetInCU: 0x43E, offset: 0x43E, size: 0x8, addend: 0x0, symName: _massimo, symObjAddr: 0x91C, symBinAddr: 0x100003A88, symSize: 0x198 }
-  - { offsetInCU: 0x4D6, offset: 0x4D6, size: 0x8, addend: 0x0, symName: _generaSet, symObjAddr: 0xAB4, symBinAddr: 0x100003C20, symSize: 0x26C }
-  - { offsetInCU: 0x5DF, offset: 0x5DF, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0xD20, symBinAddr: 0x100003E8C, symSize: 0x60 }
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _stampaSet, symObjAddr: 0x0, symBinAddr: 0x100003394, symSize: 0x180 }
+  - { offsetInCU: 0x41, offset: 0x41, size: 0x8, addend: 0x0, symName: _stampaSet, symObjAddr: 0x0, symBinAddr: 0x100003394, symSize: 0x180 }
+  - { offsetInCU: 0xAB, offset: 0xAB, size: 0x8, addend: 0x0, symName: _shuffle, symObjAddr: 0x180, symBinAddr: 0x100003514, symSize: 0xA4 }
+  - { offsetInCU: 0x115, offset: 0x115, size: 0x8, addend: 0x0, symName: _generaRigaRandomPattern, symObjAddr: 0x224, symBinAddr: 0x1000035B8, symSize: 0x9C }
+  - { offsetInCU: 0x163, offset: 0x163, size: 0x8, addend: 0x0, symName: _inserisciRigaInSet, symObjAddr: 0x2C0, symBinAddr: 0x100003654, symSize: 0xAC }
+  - { offsetInCU: 0x1CD, offset: 0x1CD, size: 0x8, addend: 0x0, symName: _generaColonna, symObjAddr: 0x36C, symBinAddr: 0x100003700, symSize: 0x70 }
+  - { offsetInCU: 0x229, offset: 0x229, size: 0x8, addend: 0x0, symName: _inserisciColonnaInSet, symObjAddr: 0x3DC, symBinAddr: 0x100003770, symSize: 0xB0 }
+  - { offsetInCU: 0x293, offset: 0x293, size: 0x8, addend: 0x0, symName: _inizializza, symObjAddr: 0x48C, symBinAddr: 0x100003820, symSize: 0x190 }
+  - { offsetInCU: 0x351, offset: 0x351, size: 0x8, addend: 0x0, symName: _massimo, symObjAddr: 0x61C, symBinAddr: 0x1000039B0, symSize: 0x22C }
+  - { offsetInCU: 0x413, offset: 0x413, size: 0x8, addend: 0x0, symName: _generaPattern, symObjAddr: 0x848, symBinAddr: 0x100003BDC, symSize: 0x150 }
+  - { offsetInCU: 0x4A7, offset: 0x4A7, size: 0x8, addend: 0x0, symName: _generaSet, symObjAddr: 0x998, symBinAddr: 0x100003D2C, symSize: 0x15C }
+  - { offsetInCU: 0x52F, offset: 0x52F, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0xAF4, symBinAddr: 0x100003E88, symSize: 0x60 }
 ...

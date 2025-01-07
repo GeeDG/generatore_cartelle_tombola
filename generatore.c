@@ -1,12 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#define SET_DI_CARTELLE 3
+#define SET_DI_CARTELLE 100
 #define MAX_LENGHT 11
 #define NUMERI_PER_RIGA 5
+#define RIGHE_RANDOMIZZATE 2
 #define ROWS 18
 #define COLUMNS 9
-
+//possibile miglioria: funzione di controllo generale dei vincoli prima dell'uscita da fz generaPattern()
 
 
 //colonna 1: 9 numeri 9 spazi
@@ -84,7 +85,7 @@ void inserisciColonnaInSet(int set[ROWS][COLUMNS], int* colonna, int colIndex)  
 }
 
 //inizializza la matrice di zeri e i due vettori per il backtracking
-void inizializza(int set[ROWS][COLUMNS], int rowNeeds[ROWS], int colNeeds[COLUMNS]) {
+void inizializza(int set[ROWS][COLUMNS], int colNeeds[COLUMNS]) {
     srand(time(NULL));
     for(int i=0; i < ROWS; i++)
         for(int j=0; j < COLUMNS; j++)
@@ -92,125 +93,47 @@ void inizializza(int set[ROWS][COLUMNS], int rowNeeds[ROWS], int colNeeds[COLUMN
     int c[COLUMNS] = {9, 10, 10, 10, 10, 10, 10, 10, 11};
     for(int i=0; i < COLUMNS; i++)
         colNeeds[i] = c[i];
-    for(int i=0; i < ROWS; i++)
-        rowNeeds[i] = NUMERI_PER_RIGA;
 
-    //approccio semicasuale, genero randomicamente il pattern delle prime 3 righe
-    int riga[COLUMNS], nRighe = 3;
-    for(int i=0; i < nRighe; i++)    {
-        rowNeeds[i] = 0;
+    //approccio semicasuale, genera randomicamente il pattern delle prime n righe (RIGHE_RANDOMIZZATE) 
+    int riga[COLUMNS];
+    for(int i=0; i < RIGHE_RANDOMIZZATE; i++)    {
         generaRigaRandomPattern(riga, NUMERI_PER_RIGA);
         inserisciRigaInSet(set, colNeeds, riga, i);
     }
     
 }
 
-//restituisce l'indice del massimo elemento del vettore
+//restituisce l'indice del massimo elemento del vettore, in caso di tie-break ne restituisce uno random tra i massimi
 int massimo(int* vet, int* colUsed, int n)    {
-    int maxIndex = 0, last = rand() % 2;    
-
-    if (colUsed[maxIndex])  {   //edge case
-        int i = maxIndex + 1;
-        while(colUsed[i])
-            i++;
-        maxIndex = i;
-    }
-
-    //last aggiunge un tocco di random nel decidere se prendere il primo o l'ultimo elemento massimo
-    for(int i=0; i < n; i++)    {
-        if (last)   {   
-            if (vet[i] >= vet[maxIndex] && !colUsed[i])
-                maxIndex = i;
-        }
-        else    {
-            if (vet[i] > vet[maxIndex] && !colUsed[i])
-                maxIndex = i;
+    int maxIndex, cnt = 0, indexList[COLUMNS] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+    for(int i=0; i < n; i++)    {   //trovo la prima colonna libera
+        if (!colUsed[i])  {
+            maxIndex = i;
+            break;
         }
     }
-    return maxIndex;
+
+    for(int i=0; i < n; i++)    {   //trovo il massimo tra gli elementi del vettore
+        if (vet[i] > vet[maxIndex] && !colUsed[i])
+            maxIndex = i;
+    }
+
+    for(int i=0; i < n; i++)    {   //ogni indice dell'elemento pari al massimo viene salvato
+        if (vet[i] == vet[maxIndex] && !colUsed[i])    {
+            indexList[cnt] = i;
+            cnt++;
+        }
+    }
+    if (cnt == 0)   exit(-1);
+    maxIndex = rand() % cnt;
+    return indexList[maxIndex];
 }
 
-//questa funzione genera un pattern randomico per il set di cartelle tramite ricorsione. 
-int generaPattern(int set[ROWS][COLUMNS], int rowNeeds[ROWS], int colNeeds[COLUMNS], int r, int c)    {
-    if (r == ROWS)  {
-        for(int i=0; i < ROWS; i++) 
-            if (rowNeeds[i] != 0)   
-                return 0;
-        for(int i=0; i < COLUMNS; i++)  
-            if (colNeeds[i] != 0) 
-                return 0;
-        return 1;
-    }
+//questa funzione genera un pattern randomico per il set di cartelle
+void generaPattern(int set[ROWS][COLUMNS], int colNeeds[COLUMNS])    {
+    for(int i=RIGHE_RANDOMIZZATE; i < ROWS; i++) {
+        int cnt = 0, colUsed[COLUMNS] = {0, 0, 0, 0, 0, 0, 0, 0, 0};    //colUsed porta a 1 gli indici già utilizzati 
 
-
-    //coordinate della prossima cella
-    int next_r = r, next_c = c + 1;
-    if (next_c == 9)    {
-        next_c = 0;
-        next_r = r + 1;
-    }
-
-    if (rowNeeds[r] > 0 && colNeeds[c] > 0) {
-        set[r][c] = 1;
-        rowNeeds[r]--;
-        colNeeds[c]--;
-
-        if (generaPattern(set, rowNeeds, colNeeds, next_r, next_c)) return 1;
-
-        // Backtrack
-        set[r][c] = 0;
-        rowNeeds[r]++;
-        colNeeds[c]++;
-    }
-
-    // TENTATIVO: Mettere 0
-    set[r][c] = 0;
-    if (generaPattern(set, rowNeeds, colNeeds, next_r, next_c)) return 1;
-
-    return 0;
-
-    //inserimento di un fattore casualità nella generazione del pattern
-    /*
-    if (rowNeeds[r] > 0 && colNeeds[c] > 0) {
-        int prob = (rand() % 9) + 1;  
-        if (prob <= 5)  {   //inserisco un numero se prob è compreso tra 1 e 5
-            rowNeeds[r]--;
-            colNeeds[c]--;
-            set[r][c] = 1;
-
-            if (generaPattern(set, rowNeeds, colNeeds, next_r, next_c)) return 1;
-            else    {   //backtrack
-                rowNeeds[r]++;
-                colNeeds[c]++;
-                set[r][c] = 0;
-            }
-        }
-        else if (prob > 5)  {   //altrimenti inserisco uno 0
-            if (generaPattern(set, rowNeeds, colNeeds, next_r, next_c)) return 1;
-            else    {   //backtrack
-                rowNeeds[r]--;
-                colNeeds[c]--;
-                set[r][c] = 1;
-            }
-        }
-    }
-    if (generaPattern(set, rowNeeds, colNeeds, next_r, next_c)) return 1;
-    return 0;   //se tutti i casi falliscono (non dovrebbero but...)
-    */
-
-}
-
-
-void generaSet(int* cartelle_counter)    {
-    int set[ROWS][COLUMNS], rowNeeds[ROWS], colNeeds[COLUMNS], colonna[MAX_LENGHT], count = 1, righeRandomizzate = 3, n;
-    
-    inizializza(set, rowNeeds, colNeeds);
-
-
-   //tentativo di semi-randomizzazione, considerando 3 righe già randomizzate
-    for(int i=righeRandomizzate; i < ROWS; i++) {
-        //colUsed porta a 1 gli indici già utilizzati 
-        int cnt = 0, colUsed[COLUMNS] = {0, 0, 0, 0, 0, 0, 0, 0, 0};    
         while(cnt < NUMERI_PER_RIGA)  {
             int max = massimo(colNeeds, colUsed, COLUMNS);
             if (colNeeds[max] > 0)  {
@@ -222,11 +145,16 @@ void generaSet(int* cartelle_counter)    {
             else
                 colUsed[max] = 1;
         }
-        rowNeeds[i] = 0;
     }
 
+}
 
-    count = 1;
+
+void generaSet(int* cartelle_counter)    {
+    int set[ROWS][COLUMNS], colNeeds[COLUMNS], colonna[MAX_LENGHT], count = 1, n;
+    
+    inizializza(set, colNeeds);
+    generaPattern(set, colNeeds);
     for(int i=0; i<COLUMNS; i++)    {
         if (i == 0) {
             n = 9;
@@ -244,7 +172,6 @@ void generaSet(int* cartelle_counter)    {
         inserisciColonnaInSet(set, colonna, i);
 
     }
-
     stampaSet(set, cartelle_counter);
 
 }
