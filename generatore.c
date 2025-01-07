@@ -36,7 +36,7 @@ void stampaSet(int set[ROWS][COLUMNS], int* cartelle_counter)   {
 //mischia il vettore colonna, complessità O(n)
 void shuffle(int* vet, int N)  {
     int randIndex, temp;
-
+    srand(time(NULL));
     for(int i=0; i < N; i++)    {
         randIndex = rand() % N;
 
@@ -105,6 +105,7 @@ void inizializza(int set[ROWS][COLUMNS], int colNeeds[COLUMNS]) {
 
 //restituisce l'indice del massimo elemento del vettore, in caso di tie-break ne restituisce uno random tra i massimi
 int massimo(int* vet, int* colUsed, int n)    {
+    srand(time(NULL));
     int maxIndex, cnt = 0, indexList[COLUMNS] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
     for(int i=0; i < n; i++)    {   //trovo la prima colonna libera
         if (!colUsed[i])  {
@@ -148,7 +149,6 @@ void generaPattern(int set[ROWS][COLUMNS], int colNeeds[COLUMNS])    {
     }
 
 }
-
 
 void generaSet(int* cartelle_counter)    {
     int set[ROWS][COLUMNS], colNeeds[COLUMNS], colonna[MAX_LENGHT], count = 1, n;
