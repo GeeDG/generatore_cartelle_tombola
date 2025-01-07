@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#define SET_DI_CARTELLE 100
+#define SET_DI_CARTELLE 10
 #define MAX_LENGHT 11
 #define NUMERI_PER_RIGA 5
 #define RIGHE_RANDOMIZZATE 2
@@ -36,7 +36,7 @@ void stampaSet(int set[ROWS][COLUMNS], int* cartelle_counter)   {
 //mischia il vettore colonna, complessità O(n)
 void shuffle(int* vet, int N)  {
     int randIndex, temp;
-    srand(time(NULL));
+
     for(int i=0; i < N; i++)    {
         randIndex = rand() % N;
 
@@ -86,7 +86,6 @@ void inserisciColonnaInSet(int set[ROWS][COLUMNS], int* colonna, int colIndex)  
 
 //inizializza la matrice di zeri e i due vettori per il backtracking
 void inizializza(int set[ROWS][COLUMNS], int colNeeds[COLUMNS]) {
-    srand(time(NULL));
     for(int i=0; i < ROWS; i++)
         for(int j=0; j < COLUMNS; j++)
             set[i][j] = 0;
@@ -105,7 +104,6 @@ void inizializza(int set[ROWS][COLUMNS], int colNeeds[COLUMNS]) {
 
 //restituisce l'indice del massimo elemento del vettore, in caso di tie-break ne restituisce uno random tra i massimi
 int massimo(int* vet, int* colUsed, int n)    {
-    srand(time(NULL));
     int maxIndex, cnt = 0, indexList[COLUMNS] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
     for(int i=0; i < n; i++)    {   //trovo la prima colonna libera
         if (!colUsed[i])  {
@@ -179,7 +177,7 @@ void generaSet(int* cartelle_counter)    {
 // ogni ripetizione del main genera e stampa un set di cartelle (6 x ripetizione)
 int main()  {
     int cartelle_counter = 1;   //serve a tenere conto del numero di cartelle
-
+    srand(time(NULL));
     for(int i=0; i < SET_DI_CARTELLE; i++)  {
         generaSet(&cartelle_counter);
     }
