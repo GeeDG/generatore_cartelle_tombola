@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#define SET_DI_CARTELLE 10
+#define SET_DI_CARTELLE 100000
 #define MAX_LENGHT 11
 #define NUMERI_PER_RIGA 5
 #define RIGHE_RANDOMIZZATE 2
